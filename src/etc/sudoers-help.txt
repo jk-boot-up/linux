@@ -1,0 +1,33 @@
+# http://toroid.org/sudoers-syntax
+
+# man sudoers
+
+ It's possible that the only sudo explanation you will ever need is:
+
+%adm ALL=(ALL) NOPASSWD: ALL
+
+This means “any user in the adm group on any host may run any command as any user without a password”. The first ALL refers to hosts, the second to target users, and the last to allowed commands. A password will be required if you leave out the "NOPASSWD:".
+User specifications
+
+The /etc/sudoers file contains “user specifications” that define the commands that users may execute. When sudo is invoked, these specifications are checked in order, and the last match is used. A user specification looks like this at its most basic:
+##########################################################################
+##########################################################################
+##########################################################################
+User Host = (Runas) Command
+
+Read this as “User may run Command as the Runas user on Host”.
+##########################################################################
+##########################################################################
+##########################################################################
+
+
+Any or all of the above may be the special keyword ALL, which always matches.
+
+User and Runas may be usernames, group names prefixed with %, numeric UIDs prefixed with #, or numeric GIDs prefixed with %#. Host may be a hostname, IP address, or a whole network (e.g., 192.0.2.0/24), but not 127.0.0.1.
+Runas
+
+This optional clause controls the target user (and group) sudo will run the Command as, or in other words, which combinations of the -u and -g arguments it will accept.
+
+If the clause is omitted, the user will be permitted to run commands only as root. If you specify a username, e.g., (postgres), sudo will accept “-u postgres” and run commands as that user. In both cases, sudo will not accept -g.
+
+If you also specify a target group, e.g., (postgres:postgres), sudo will accept any combination of the listed users and groups (see the section on aliases below). If you specify only a target group, e.g., (:postgres), sudo will accept and act on “-g postgres” but run commands only as the invoking user. 
