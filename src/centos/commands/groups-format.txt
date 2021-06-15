@@ -1,0 +1,8 @@
+user-name:x:user-number:group-number:comment section:/home-directory:default-shell
+# groups
+
+# lists all groups of user
+groups user_name
+
+# lists all members of a group
+sudo lid group_name
